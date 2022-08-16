@@ -24,10 +24,21 @@
             }
         },
         methods: {
-            submit(){
-
+            async submit(){
                 if(this.taskName !== '' && this.taskDate != ''){
-                    const newtask = new Task(1, this.taskName, this.taskDate, false);
+                    const task = await fetch('http://localhost:8080/tarefas', {
+                        method: 'POST',
+                        headers:{
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            descricao: this.taskName,
+                            prazo: this.taskDate,
+                            completa: false
+                        })
+                    }).then(res => res.json())
+
+                    const newtask = new Task(task.id, task.descricao, task.prazo, task.completa);
 
                     this.$emit('new-task', newtask);
                 }

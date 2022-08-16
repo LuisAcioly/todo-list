@@ -45,17 +45,14 @@
                     this.showList = true;
                 }
             },
-            initArrays(){
+            async initArrays(){
 
-                const tasks = [
-                    new Task(1, 'item1', '01/01/2022', true),
-                    new Task(2, 'item2', '01/01/2022', true),
-                    new Task(3, 'item3', '01/01/2022', false),
-                    new Task(4, 'item4', '01/01/2022', false),
-                    new Task(5, 'item5', '01/01/2022', true),
-                    new Task(6, 'item6', '01/01/2022', false),
-                    new Task(7, 'item7', '01/01/2022', true)
-                ]
+                const tasks = await fetch('http://localhost:8080/tarefas', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(res => res.json())
 
                 tasks.forEach((task) => {
                     if(task.completa){

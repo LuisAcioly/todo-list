@@ -18,19 +18,39 @@
             unconcludedTasks: Array,
         },
         methods: {
-            concludeTask(event) {
-               var concludedTask = event;
-               concludedTask.completa = true;
+            async concludeTask(event) {
+                const response = await fetch(`http://localhost:8080/tarefas/${event.id}`, {
+                    method: 'PUT',
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        descricao: event.descricao,
+                        prazo: event.prazo,
+                        completa: true
+                    })
+                }).then(res => res.json())
 
-              this.removeTask(event);
-
-               this.$emit('send-conclude-task', event);
+                
+                if(response[0] === 1){
+                    this.removeTask(event);
+                    this.$emit('send-conclude-task', event);
+                }
             },
             addTask(task){
                 this.unconcludedTasks.push(task)
             },
-            deleteTask(event){
-                this.removeTask(event);
+            async deleteTask(event){
+                const response = await fetch(`http://localhost:8080/tarefas/${event.id}`, {
+                    method: 'DELETE',
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                }).then(res => res.json()) 
+
+                if(response === 1){
+                    this.removeTask(event);
+                }
             },
             removeTask(event){
                 const index = this.unconcludedTasks.findIndex(task => {
