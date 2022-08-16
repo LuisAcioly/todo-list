@@ -2,14 +2,14 @@
     <div class="unconcluded-list">
         <ul>
             <li v-for="task in unconcludedTasks" v-bind:key="task">
-                <UnconcludedListElementComponent  :task="task" @conclude-task="concludeTask" />
+                <UnconcludedListElementComponent  :task="task" @conclude-task="concludeTask" @delete-conclude-task="deleteTask"/>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
-    import UnconcludedListElementComponent from './UnconcludedListElementComponent.vue';
+    import UnconcludedListElementComponent from '../UnconcludedList/UnconcludedListElementComponent.vue';
     export default {
         name: "UnconcludedListComponent",
         components: {UnconcludedListElementComponent},
@@ -22,16 +22,22 @@
                var concludedTask = event;
                concludedTask.completa = true;
 
-               const index = this.unconcludedTasks.findIndex(task => {
-                return task.id === event.id
-               })
-
-               this.unconcludedTasks.splice(index, 1);
+              this.removeTask(event);
 
                this.$emit('send-conclude-task', event);
             },
             addTask(task){
                 this.unconcludedTasks.push(task)
+            },
+            deleteTask(event){
+                this.removeTask(event);
+            },
+            removeTask(event){
+                const index = this.unconcludedTasks.findIndex(task => {
+                    return task.id === event.id
+                })
+
+               this.unconcludedTasks.splice(index, 1);
             }
         },
     }

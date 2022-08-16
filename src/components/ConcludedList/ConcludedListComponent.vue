@@ -2,7 +2,7 @@
     <div class="concluded-list">
         <ul>
             <li v-for="task in concludedTasks" v-bind:key="task">
-                <ConcludedListElementComponent :task="task" @unconclude-task="unconcludeTask"/>
+                <ConcludedListElementComponent :task="task" @unconclude-task="unconcludeTask" @delete-unconclude-task="deleteTask"/>
             </li>
         </ul>
     </div>
@@ -21,16 +21,22 @@
                var unconcludedTask = event;
                unconcludedTask.completa = false;
                
-               const index = this.concludedTasks.findIndex(task => {
-                return task.id === event.id
-               })
-
-               this.concludedTasks.splice(index, 1);
+               this.removeTask(event);
 
                this.$emit('send-unconclude-task', event);
             },
             addTask(task){
                 this.concludedTasks.push(task)
+            },
+            deleteTask(event){
+                this.removeTask(event);
+            },
+            removeTask(event){
+                const index = this.concludedTasks.findIndex(task => {
+                    return task.id === event.id
+                })
+
+               this.concludedTasks.splice(index, 1);
             }
         },
     }

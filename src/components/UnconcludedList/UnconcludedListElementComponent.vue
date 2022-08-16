@@ -1,20 +1,27 @@
 <template>
     <div class="list-element">
-        <button @click="$emit('conclude-task', task)" class="circle">
-            <div class="icon">
-                <font-awesome-icon :icon="['fa', 'check']" size="lg"/>
+        <div class="task">
+            <button @click="$emit('conclude-task', task)" class="circle">
+                <div class="icon">
+                    <font-awesome-icon :icon="['fa', 'check']" size="lg"/>
+                </div>
+            </button>
+        <h1>{{task.descricao}}</h1>
+        </div>
+        <button @click="$emit('delete-conclude-task', task)" class="delete-button">
+            <div class="delete-icon">
+                <font-awesome-icon :icon="['fa', 'trash-can']" size="lg" />
             </div>
         </button>
-        <h1>{{task.descricao}}</h1>
     </div>
 </template>
 
 <script>
-    import Task from '../models/Task'
+    import Task from '../../models/Task';
 
     export default {
         name: "UnconcludedListElementComponent",
-        emits: ['conclude-task'],
+        emits: ['conclude-task', 'delete-conclude-task'],
         props: {
             task: Task
         }
@@ -29,7 +36,14 @@
         background-color: #2A2A2A;
         border-radius: 5px;
         padding-left: 2vw;
+        padding-right: 2vw;
         font-size: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .task {
         display: flex;
         align-items: center;
     }
@@ -69,6 +83,20 @@
 
     .circle:hover  .icon {
         display: block;
+    }
+
+    .delete-button {
+        background-color: transparent;
+        border: none;
+        float: right;
+    }
+
+    .delete-button:hover{
+        cursor: pointer;
+    }
+
+    .delete-icon {
+        color: #F25050;
     }
 
 </style>

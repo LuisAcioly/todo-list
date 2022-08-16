@@ -6,8 +6,8 @@
 
 <script>
     import ListComponent from './ListComponent.vue';
-    import ConcludedListElementComponent from './ConcludedListElementComponent.vue';
-    import UnconcludedListComponent from './UnconcludedListComponent.vue'
+    import ConcludedListElementComponent from './ConcludedList/ConcludedListElementComponent.vue';
+    import UnconcludedListComponent from './UnconcludedList/UnconcludedListComponent.vue'
 
     export default {
         name: "ToDoListComponent",

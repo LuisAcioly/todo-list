@@ -1,21 +1,28 @@
 <template>
     <div class="concluded-list-element">
-        <button class="concluded-circle" @click="$emit('unconclude-task', task)">
-            <div class="concluded-icon">
-                <font-awesome-icon :icon="['fa', 'check']" size="lg"/>
+        <div class="task">
+            <button class="concluded-circle" @click="$emit('unconclude-task', task)">
+                <div class="concluded-icon">
+                    <font-awesome-icon :icon="['fa', 'check']" size="lg"/>
+                </div>
+            </button>
+            <h1>{{task.descricao}}</h1>
+        </div>
+        <button @click="$emit('delete-unconclude-task', task)" class="delete-button">
+            <div class="delete-icon">
+                <font-awesome-icon :icon="['fa', 'trash-can']" size="lg" />
             </div>
         </button>
-        <h1>{{task.descricao}}</h1>
     </div>
 </template>
 
 <script>
 
-    import Task from '../models/Task'
+    import Task from '../../models/Task';
 
     export default {
         name: "ConcludedListElementComponent",
-        emits: ['unconclude-task'],
+        emits: ['unconclude-task', 'delete-unconclude-task'],
         props: {
             task: Task,
         }
@@ -30,10 +37,12 @@
         background-color: #2A2A2A;
         border-radius: 5px;
         padding-left: 2vw;
+        padding-right: 2vw;
         font-size: 10px;
         display: flex;
         align-items: center;
         text-decoration: line-through;
+        justify-content: space-between;
     }
 
     .concluded-list-element:hover {
