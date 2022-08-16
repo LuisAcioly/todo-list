@@ -1,8 +1,8 @@
 <template>
     <div class="concluded-list">
         <ul>
-            <li v-for="item in items" v-bind:key="item">
-                <ConcludedListElementComponent />
+            <li v-for="task in concludedTasks" v-bind:key="task">
+                <ConcludedListElementComponent :task="task" @unconclude-task="unconcludeTask"/>
             </li>
         </ul>
     </div>
@@ -13,11 +13,26 @@
     export default {
         name: "ConcludedListComponent",
         components: {ConcludedListElementComponent},
-        data(){
-            return {
-                items: [1, 2, 3, 4]
+        props: {
+            concludedTasks: Array,
+        },
+        methods: {
+            unconcludeTask(event) {
+               var unconcludedTask = event;
+               unconcludedTask.completa = false;
+               
+               const index = this.concludedTasks.findIndex(task => {
+                return task.id === event.id
+               })
+
+               this.concludedTasks.splice(index, 1);
+
+               this.$emit('send-unconclude-task', event);
+            },
+            addTask(task){
+                this.concludedTasks.push(task)
             }
-        }
+        },
     }
 </script>
 

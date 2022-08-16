@@ -1,17 +1,23 @@
 <template>
     <div class="list-element">
-        <div class="circle">
+        <button @click="$emit('conclude-task', task)" class="circle">
             <div class="icon">
                 <font-awesome-icon :icon="['fa', 'check']" size="lg"/>
             </div>
-        </div>
-        <h1>This is a unconcluded list element</h1>
+        </button>
+        <h1>{{task.descricao}}</h1>
     </div>
 </template>
 
 <script>
+    import Task from '../models/Task'
+
     export default {
-        name: "UnconcludedListElementComponent"
+        name: "UnconcludedListElementComponent",
+        emits: ['conclude-task'],
+        props: {
+            task: Task
+        }
     }
 </script>
 
@@ -38,8 +44,8 @@
     }
 
     .circle {
-      width: 20px;
-      height: 20px;
+      width: 25px;
+      height: 25px;
       -webkit-border-radius: 25px;
       -moz-border-radius: 25px;
       border-radius: 25px;
@@ -49,6 +55,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      background-color: transparent;
     }
 
     .circle:hover {
@@ -57,6 +64,7 @@
 
     .icon {
         display: none;
+        color: #fff;
     }
 
     .circle:hover  .icon {
