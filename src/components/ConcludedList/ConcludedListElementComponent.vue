@@ -6,7 +6,7 @@
                     <font-awesome-icon :icon="['fa', 'check']" size="lg"/>
                 </div>
             </button>
-            <h1>{{task.descricao}}</h1>
+            <h1>{{task.descricao}} - {{data.getDate()+'/' + (data.getMonth()+1) + '/'+data.getFullYear()}}</h1>
         </div>
         <button @click="$emit('delete-unconclude-task', task)" class="delete-button">
             <div class="delete-icon">
@@ -25,6 +25,11 @@
         emits: ['unconclude-task', 'delete-unconclude-task'],
         props: {
             task: Task,
+        },
+        data() {
+            return {
+                data: new Date(this.task.prazo),
+            }
         }
     }
 </script>
