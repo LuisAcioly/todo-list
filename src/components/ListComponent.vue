@@ -54,6 +54,8 @@
                     }
                 }).then(res => res.json())
 
+                console.log(tasks)
+
                 tasks.forEach((task) => {
                     if(task.completa){
                         this.concludedList.push(task)

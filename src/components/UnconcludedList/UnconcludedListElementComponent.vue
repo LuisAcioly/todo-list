@@ -6,7 +6,7 @@
                     <font-awesome-icon :icon="['fa', 'check']" size="lg"/>
                 </div>
             </button>
-        <h1>{{task.descricao}} - {{data.getDate()+'/' + (data.getMonth()+1) + '/'+data.getFullYear()}}</h1>
+        <h1>{{task.descricao}} - {{data.dia}}/{{data.mes}}/{{data.ano}}</h1>
         </div>
         <button @click="$emit('delete-conclude-task', task)" class="delete-button">
             <div class="delete-icon">
@@ -27,7 +27,11 @@
         },
         data(){
             return {
-                data: new Date(this.task.prazo),
+                data: {
+                    dia: this.task.prazo.substr(8,2),
+                    mes: this.task.prazo.substr(5,2),
+                    ano: this.task.prazo.substr(0,4),
+                },
             }
         }
     }
